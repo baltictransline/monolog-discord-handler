@@ -1,5 +1,5 @@
 {
-  "name": "lefuturiste/monolog-discord-handler",
+  "name": "baltictransline/monolog-discord-handler",
   "description": "A simple monolog handler for support Discord webhooks",
   "type": "library",
   "keywords": [
