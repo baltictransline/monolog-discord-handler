@@ -20,7 +20,7 @@ class Config
     protected $multiMsg = false;
 
     /** @var int|null */
-    protected $maxMessageLength;
+    protected $maxMessageLength = 2000;
 
     /** @var string[] */
     protected $webHooks = [];

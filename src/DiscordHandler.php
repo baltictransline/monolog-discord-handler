@@ -81,7 +81,7 @@ class DiscordHandler extends AbstractProcessingHandler
                 'embeds' => [
                     [
                         'title' => $record['level_name'],
-                        'description' => $this->splitMessage($record['message'])[0],
+                        'description' => $this->splitMessage($record['formatted_message'])[0],
                         'timestamp' => $record['datetime']->format($this->config->getDatetimeFormat()),
                         'color' => $this->levelColors[$record['level']],
                     ]
@@ -95,7 +95,7 @@ class DiscordHandler extends AbstractProcessingHandler
                     '{name}' => $this->config->getName(),
                     '{subName}' => $this->config->getSubName(),
                     '{levelName}' => $record['level_name'],
-                    '{message}' => $record['message'],
+                    '{message}' => $record['formatted_message'],
                 ]
             );
             $parts = array_map(function ($message) {
