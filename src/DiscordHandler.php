@@ -76,12 +76,20 @@ class DiscordHandler extends AbstractProcessingHandler
      */
     protected function write(array $record): void
     {
+        $errorDescription = $record['message'];
+        if (isset($record['context']['command'])) {
+            $errorDescription = strtr($errorDescription, ['{command}' => $record['context']['command']]);
+        }
+        if (isset($record['context']['message'])) {
+            $errorDescription = strtr($errorDescription, ['{message}' => $record['context']['message']]);
+        }
+
         if ($this->config->isEmbedMode()) {
             $parts = [[
                 'embeds' => [
                     [
                         'title' => $record['level_name'],
-                        'description' => $this->splitMessage($record['formatted_message'])[0],
+                        'description' => $this->splitMessage($errorDescription)[0],
                         'timestamp' => $record['datetime']->format($this->config->getDatetimeFormat()),
                         'color' => $this->levelColors[$record['level']],
                     ]
@@ -95,7 +103,7 @@ class DiscordHandler extends AbstractProcessingHandler
                     '{name}' => $this->config->getName(),
                     '{subName}' => $this->config->getSubName(),
                     '{levelName}' => $record['level_name'],
-                    '{message}' => $record['formatted_message'],
+                    '{message}' => $errorDescription,
                 ]
             );
             $parts = array_map(function ($message) {
